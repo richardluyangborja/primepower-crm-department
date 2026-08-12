@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider.tsx"
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen"
+import { TooltipProvider } from "./components/ui/tooltip"
 
 // Create a new router instance
 const router = createRouter({ routeTree })
@@ -25,7 +26,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <ThemeProvider>
-        <RouterProvider router={router} />
+        <TooltipProvider>
+          <RouterProvider router={router} />
+        </TooltipProvider>
       </ThemeProvider>
     </StrictMode>
   )
