@@ -13,12 +13,14 @@ import {
 import { Link } from "@tanstack/react-router"
 import {
   Bell,
+  BarChart3,
   ChartSpline,
   ClipboardCheck,
   LayoutGrid,
   LogOut,
   MessageCircleMore,
   Network,
+  Sparkles,
   UserRound,
   UserRoundCog,
 } from "lucide-react"
@@ -44,6 +46,17 @@ const sidebarConfig = [
         path: "/admin/dashboard",
         label: "Dashboard",
         icon: LayoutGrid,
+      },
+      {
+        path: "/admin/analytics",
+        label: "Analytics",
+        icon: BarChart3,
+      },
+      {
+        path: "/admin/ai-smart-actions",
+        label: "AI Smart Actions",
+        icon: Sparkles,
+        tooltip: "AI Smart Actions",
       },
       {
         path: "/admin/account",

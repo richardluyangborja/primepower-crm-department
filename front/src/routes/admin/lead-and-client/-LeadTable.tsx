@@ -22,10 +22,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import CreateLeadSheet from "./-CreateLeadSheet"
 import { getRouteApi, useNavigate } from "@tanstack/react-router"
+import type { Company } from "./-api"
 
 export default function LeadTable() {
   const routeApi = getRouteApi("/admin/lead-and-client/")
-  const companies = routeApi.useLoaderData()
+  const companies = routeApi.useLoaderData() as Company[]
   const companyLeads = companies.filter(
     (company) => company.lead.status !== "CONVERTED"
   )

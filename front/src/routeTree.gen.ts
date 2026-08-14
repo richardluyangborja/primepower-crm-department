@@ -12,8 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as AdminAiSmartActionsIndexRouteImport } from './routes/admin/ai-smart-actions/index'
+import { Route as AdminAnalyticsIndexRouteImport } from './routes/admin/analytics/index'
+import { Route as AdminClientSatisfactionsIndexRouteImport } from './routes/admin/client-satisfactions/index'
+import { Route as AdminCommunicationsIndexRouteImport } from './routes/admin/communications/index'
 import { Route as AdminDashboardIndexRouteImport } from './routes/admin/dashboard/index'
 import { Route as AdminLeadAndClientIndexRouteImport } from './routes/admin/lead-and-client/index'
+import { Route as AdminOpportunitiesIndexRouteImport } from './routes/admin/opportunities/index'
+import { Route as AdminRemindersIndexRouteImport } from './routes/admin/reminders/index'
+import { Route as AdminUsersIndexRouteImport } from './routes/admin/users/index'
 import { Route as AdminLeadAndClientCompanyIdIndexRouteImport } from './routes/admin/lead-and-client/$companyId/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,6 +38,29 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAiSmartActionsIndexRoute =
+  AdminAiSmartActionsIndexRouteImport.update({
+    id: '/ai-smart-actions/',
+    path: '/ai-smart-actions/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
+const AdminAnalyticsIndexRoute = AdminAnalyticsIndexRouteImport.update({
+  id: '/analytics/',
+  path: '/analytics/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminClientSatisfactionsIndexRoute =
+  AdminClientSatisfactionsIndexRouteImport.update({
+    id: '/client-satisfactions/',
+    path: '/client-satisfactions/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
+const AdminCommunicationsIndexRoute =
+  AdminCommunicationsIndexRouteImport.update({
+    id: '/communications/',
+    path: '/communications/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
 const AdminDashboardIndexRoute = AdminDashboardIndexRouteImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
@@ -39,6 +69,21 @@ const AdminDashboardIndexRoute = AdminDashboardIndexRouteImport.update({
 const AdminLeadAndClientIndexRoute = AdminLeadAndClientIndexRouteImport.update({
   id: '/lead-and-client/',
   path: '/lead-and-client/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminOpportunitiesIndexRoute = AdminOpportunitiesIndexRouteImport.update({
+  id: '/opportunities/',
+  path: '/opportunities/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminRemindersIndexRoute = AdminRemindersIndexRouteImport.update({
+  id: '/reminders/',
+  path: '/reminders/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
+  id: '/users/',
+  path: '/users/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminLeadAndClientCompanyIdIndexRoute =
@@ -52,16 +97,30 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login/': typeof LoginIndexRoute
+  '/admin/ai-smart-actions/': typeof AdminAiSmartActionsIndexRoute
+  '/admin/analytics/': typeof AdminAnalyticsIndexRoute
+  '/admin/client-satisfactions/': typeof AdminClientSatisfactionsIndexRoute
+  '/admin/communications/': typeof AdminCommunicationsIndexRoute
   '/admin/dashboard/': typeof AdminDashboardIndexRoute
   '/admin/lead-and-client/': typeof AdminLeadAndClientIndexRoute
+  '/admin/opportunities/': typeof AdminOpportunitiesIndexRoute
+  '/admin/reminders/': typeof AdminRemindersIndexRoute
+  '/admin/users/': typeof AdminUsersIndexRoute
   '/admin/lead-and-client/$companyId/': typeof AdminLeadAndClientCompanyIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginIndexRoute
+  '/admin/ai-smart-actions': typeof AdminAiSmartActionsIndexRoute
+  '/admin/analytics': typeof AdminAnalyticsIndexRoute
+  '/admin/client-satisfactions': typeof AdminClientSatisfactionsIndexRoute
+  '/admin/communications': typeof AdminCommunicationsIndexRoute
   '/admin/dashboard': typeof AdminDashboardIndexRoute
   '/admin/lead-and-client': typeof AdminLeadAndClientIndexRoute
+  '/admin/opportunities': typeof AdminOpportunitiesIndexRoute
+  '/admin/reminders': typeof AdminRemindersIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
   '/admin/lead-and-client/$companyId': typeof AdminLeadAndClientCompanyIdIndexRoute
 }
 export interface FileRoutesById {
@@ -69,8 +128,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login/': typeof LoginIndexRoute
+  '/admin/ai-smart-actions/': typeof AdminAiSmartActionsIndexRoute
+  '/admin/analytics/': typeof AdminAnalyticsIndexRoute
+  '/admin/client-satisfactions/': typeof AdminClientSatisfactionsIndexRoute
+  '/admin/communications/': typeof AdminCommunicationsIndexRoute
   '/admin/dashboard/': typeof AdminDashboardIndexRoute
   '/admin/lead-and-client/': typeof AdminLeadAndClientIndexRoute
+  '/admin/opportunities/': typeof AdminOpportunitiesIndexRoute
+  '/admin/reminders/': typeof AdminRemindersIndexRoute
+  '/admin/users/': typeof AdminUsersIndexRoute
   '/admin/lead-and-client/$companyId/': typeof AdminLeadAndClientCompanyIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -79,24 +145,45 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/login/'
+    | '/admin/ai-smart-actions/'
+    | '/admin/analytics/'
+    | '/admin/client-satisfactions/'
+    | '/admin/communications/'
     | '/admin/dashboard/'
     | '/admin/lead-and-client/'
+    | '/admin/opportunities/'
+    | '/admin/reminders/'
+    | '/admin/users/'
     | '/admin/lead-and-client/$companyId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
     | '/login'
+    | '/admin/ai-smart-actions'
+    | '/admin/analytics'
+    | '/admin/client-satisfactions'
+    | '/admin/communications'
     | '/admin/dashboard'
     | '/admin/lead-and-client'
+    | '/admin/opportunities'
+    | '/admin/reminders'
+    | '/admin/users'
     | '/admin/lead-and-client/$companyId'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/login/'
+    | '/admin/ai-smart-actions/'
+    | '/admin/analytics/'
+    | '/admin/client-satisfactions/'
+    | '/admin/communications/'
     | '/admin/dashboard/'
     | '/admin/lead-and-client/'
+    | '/admin/opportunities/'
+    | '/admin/reminders/'
+    | '/admin/users/'
     | '/admin/lead-and-client/$companyId/'
   fileRoutesById: FileRoutesById
 }
@@ -129,6 +216,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/ai-smart-actions/': {
+      id: '/admin/ai-smart-actions/'
+      path: '/ai-smart-actions'
+      fullPath: '/admin/ai-smart-actions/'
+      preLoaderRoute: typeof AdminAiSmartActionsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/analytics/': {
+      id: '/admin/analytics/'
+      path: '/analytics'
+      fullPath: '/admin/analytics/'
+      preLoaderRoute: typeof AdminAnalyticsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/client-satisfactions/': {
+      id: '/admin/client-satisfactions/'
+      path: '/client-satisfactions'
+      fullPath: '/admin/client-satisfactions/'
+      preLoaderRoute: typeof AdminClientSatisfactionsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/communications/': {
+      id: '/admin/communications/'
+      path: '/communications'
+      fullPath: '/admin/communications/'
+      preLoaderRoute: typeof AdminCommunicationsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/dashboard/': {
       id: '/admin/dashboard/'
       path: '/dashboard'
@@ -143,6 +258,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLeadAndClientIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/opportunities/': {
+      id: '/admin/opportunities/'
+      path: '/opportunities'
+      fullPath: '/admin/opportunities/'
+      preLoaderRoute: typeof AdminOpportunitiesIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/reminders/': {
+      id: '/admin/reminders/'
+      path: '/reminders'
+      fullPath: '/admin/reminders/'
+      preLoaderRoute: typeof AdminRemindersIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/users/': {
+      id: '/admin/users/'
+      path: '/users'
+      fullPath: '/admin/users/'
+      preLoaderRoute: typeof AdminUsersIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/lead-and-client/$companyId/': {
       id: '/admin/lead-and-client/$companyId/'
       path: '/lead-and-client/$companyId'
@@ -154,14 +290,28 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteRouteChildren {
+  AdminAiSmartActionsIndexRoute: typeof AdminAiSmartActionsIndexRoute
+  AdminAnalyticsIndexRoute: typeof AdminAnalyticsIndexRoute
+  AdminClientSatisfactionsIndexRoute: typeof AdminClientSatisfactionsIndexRoute
+  AdminCommunicationsIndexRoute: typeof AdminCommunicationsIndexRoute
   AdminDashboardIndexRoute: typeof AdminDashboardIndexRoute
   AdminLeadAndClientIndexRoute: typeof AdminLeadAndClientIndexRoute
+  AdminOpportunitiesIndexRoute: typeof AdminOpportunitiesIndexRoute
+  AdminRemindersIndexRoute: typeof AdminRemindersIndexRoute
+  AdminUsersIndexRoute: typeof AdminUsersIndexRoute
   AdminLeadAndClientCompanyIdIndexRoute: typeof AdminLeadAndClientCompanyIdIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAiSmartActionsIndexRoute: AdminAiSmartActionsIndexRoute,
+  AdminAnalyticsIndexRoute: AdminAnalyticsIndexRoute,
+  AdminClientSatisfactionsIndexRoute: AdminClientSatisfactionsIndexRoute,
+  AdminCommunicationsIndexRoute: AdminCommunicationsIndexRoute,
   AdminDashboardIndexRoute: AdminDashboardIndexRoute,
   AdminLeadAndClientIndexRoute: AdminLeadAndClientIndexRoute,
+  AdminOpportunitiesIndexRoute: AdminOpportunitiesIndexRoute,
+  AdminRemindersIndexRoute: AdminRemindersIndexRoute,
+  AdminUsersIndexRoute: AdminUsersIndexRoute,
   AdminLeadAndClientCompanyIdIndexRoute: AdminLeadAndClientCompanyIdIndexRoute,
 }
 

@@ -9,7 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { getRouteApi, useNavigate } from "@tanstack/react-router"
+import { Link, getRouteApi, useNavigate } from "@tanstack/react-router"
+import type { Company } from "../-api"
 import {
   ChevronLeft,
   CircleAlert,
@@ -24,7 +25,13 @@ import {
 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import type { Company } from "../-api"
+import {
+  getOpportunitiesByCompanyId,
+  getCommunicationsByCompanyId,
+  getFollowUpsByCompanyId,
+  getSurveysByCompanyId,
+  getSurveyResponsesBySurveyId,
+} from "@/lib/mock-data"
 
 export default function RouteComponent() {
   const routeApi = getRouteApi("/admin/lead-and-client/$companyId/")
@@ -67,10 +74,10 @@ export default function RouteComponent() {
         <Separator className="my-6" />
         <ContactSection lead={company!} />
         <Separator className="my-6" />
-        <OpportunityCard />
-        <CommunicationsCard />
+        <OpportunityCard company={company!} />
+        <CommunicationsCard company={company!} />
         <Separator className="my-6" />
-        <FollowUpSection />
+        <FollowUpSection company={company!} />
       </div>
     )
   }
@@ -103,14 +110,14 @@ export default function RouteComponent() {
         </section>
         <CompanyInfoCard company={company!} />
         <LeadInfoCard company={company!} isClient />
-        <ClientSatisfactionCard />
+        <ClientSatisfactionCard company={company!} />
         <Separator className="my-6" />
         <ContactSection lead={company!} />
         <Separator className="my-6" />
-        <OpportunityCard />
-        <CommunicationsCard />
+        <OpportunityCard company={company!} />
+        <CommunicationsCard company={company!} />
         <Separator className="my-6" />
-        <FollowUpSection />
+        <FollowUpSection company={company!} />
       </div>
     )
   }
@@ -248,7 +255,7 @@ function ContactSection({ lead }: { lead: Company }) {
         </Button>
       </header>
       <div className="grid grid-cols-2 gap-4">
-        {lead.contacts.map((contact, i) => (
+        {lead.contacts.map((contact: { name: string; position: string; email: string; phone: string }, i: number) => (
           <Card key={i}>
             <CardHeader>
               <CardTitle>{contact.name}</CardTitle>
@@ -276,7 +283,9 @@ function ContactSection({ lead }: { lead: Company }) {
   )
 }
 
-function OpportunityCard() {
+function OpportunityCard({ company }: { company: Company }) {
+  const companyOpps = getOpportunitiesByCompanyId(company!.id)
+
   return (
     <section>
       <Card>
@@ -284,28 +293,29 @@ function OpportunityCard() {
           <CardTitle>Opportunities</CardTitle>
         </CardHeader>
         <CardContent>
-          <div>
-            <p className="font-semibold">Production Manpower Contract</p>
-            <p>Negotiation</p>
-            <p>High Priority</p>
-            <p>Updated 2 hours ago</p>
-          </div>
-          <Separator className="my-2" />
-          <div>
-            <p className="font-semibold">Production Manpower Contract</p>
-            <p>Negotiation</p>
-            <p>High Priority</p>
-            <p>Updated 2 hours ago</p>
+          <div className="flex flex-col gap-3">
+            {companyOpps.slice(0, 2).map((opp) => (
+              <div key={opp.id}>
+                <p className="font-semibold">{opp.title}</p>
+                <p>{opp.stage.replace(/_/g, " ")}</p>
+                <p>{opp.priority} Priority</p>
+                <p>Updated {opp.updatedAt.toDateString()}</p>
+              </div>
+            ))}
           </div>
         </CardContent>
         <CardFooter>
-          <Badge variant="outline">
-            <Plus size={18} />
-            <span>1 more</span>
-          </Badge>
-          <Button variant="link" size="sm">
-            <span>View Pipeline</span>
-            <MoveUpRight />
+          {companyOpps.length > 2 && (
+            <Badge variant="outline">
+              <Plus size={18} />
+              <span>{companyOpps.length - 2} more</span>
+            </Badge>
+          )}
+          <Button variant="link" size="sm" asChild>
+            <Link to="/admin/opportunities">
+              <span>View Pipeline</span>
+              <MoveUpRight />
+            </Link>
           </Button>
         </CardFooter>
       </Card>
@@ -313,7 +323,9 @@ function OpportunityCard() {
   )
 }
 
-function CommunicationsCard() {
+function CommunicationsCard({ company }: { company: Company }) {
+  const companyComms = getCommunicationsByCompanyId(company!.id)
+
   return (
     <section>
       <Card>
@@ -321,26 +333,28 @@ function CommunicationsCard() {
           <CardTitle>Recent Communications</CardTitle>
         </CardHeader>
         <CardContent>
-          <div>
-            <p className="font-semibold">Aug 14</p>
-            <p>Call</p>
-            <p>Richard Santos called Juan Dela Cruz</p>
-          </div>
-          <Separator className="my-2" />
-          <div>
-            <p className="font-semibold">Aug 12</p>
-            <p>Email</p>
-            <p>Proposal requirements sent to client contact.</p>
+          <div className="flex flex-col gap-3">
+            {companyComms.slice(0, 2).map((comm) => (
+              <div key={comm.id}>
+                <p className="font-semibold">{comm.dateTime.toLocaleDateString()}</p>
+                <p>{comm.type}</p>
+                <p>{comm.subject}</p>
+              </div>
+            ))}
           </div>
         </CardContent>
         <CardFooter>
-          <Badge variant="outline">
-            <Plus size={18} />
-            <span>1 more</span>
-          </Badge>
-          <Button variant="link" size="sm">
-            <span>View Communication History</span>
-            <MoveUpRight />
+          {companyComms.length > 2 && (
+            <Badge variant="outline">
+              <Plus size={18} />
+              <span>{companyComms.length - 2} more</span>
+            </Badge>
+          )}
+          <Button variant="link" size="sm" asChild>
+            <Link to="/admin/communications">
+              <span>View Communication History</span>
+              <MoveUpRight />
+            </Link>
           </Button>
         </CardFooter>
       </Card>
@@ -348,57 +362,92 @@ function CommunicationsCard() {
   )
 }
 
-function FollowUpSection() {
+function FollowUpSection({ company }: { company: Company }) {
+  const companyFollowUps = getFollowUpsByCompanyId(company!.id)
+
   return (
     <section>
       <header className="mb-4 flex items-center justify-between">
         <h1 className="text-xl font-semibold">Reminders</h1>
-        <Button variant="link">
-          <span>Go to Follow-up Reminders</span>
-          <MoveUpRight />
+        <Button variant="link" asChild>
+          <Link to="/admin/reminders">
+            <span>Go to Follow-up Reminders</span>
+            <MoveUpRight />
+          </Link>
         </Button>
       </header>
       <div className="flex flex-col gap-4">
-        <Alert variant="destructive">
-          <CircleAlert />
-          <AlertTitle>Discuss contract requirements</AlertTitle>
-          <AlertDescription>Due Aug 12, 2026</AlertDescription>
-        </Alert>
-        <Separator className="my-4" />
-        <Alert>
-          <Info />
-          <AlertTitle>Discuss manpower requirements</AlertTitle>
-          <AlertDescription>Due August 18, 2026</AlertDescription>
-        </Alert>
-        <Alert>
-          <Info />
-          <AlertTitle>Discuss manpower requirements</AlertTitle>
-          <AlertDescription>Due August 18, 2026</AlertDescription>
-        </Alert>
+        {companyFollowUps
+          .filter((f) => f.status === "Overdue")
+          .map((followUp) => (
+            <Alert key={followUp.id} variant="destructive">
+              <CircleAlert />
+              <AlertTitle>{followUp.title}</AlertTitle>
+              <AlertDescription>
+                Due {followUp.dueDate.toLocaleDateString()}
+              </AlertDescription>
+            </Alert>
+          ))}
+        {companyFollowUps
+          .filter((f) => f.status === "Pending")
+          .map((followUp) => (
+            <Alert key={followUp.id}>
+              <Info />
+              <AlertTitle>{followUp.title}</AlertTitle>
+              <AlertDescription>
+                Due {followUp.dueDate.toLocaleDateString()}
+              </AlertDescription>
+            </Alert>
+          ))}
+        {companyFollowUps.length === 0 && (
+          <Alert>
+            <Info />
+            <AlertTitle>No follow-ups</AlertTitle>
+            <AlertDescription>
+              There are no follow-ups for this company yet.
+            </AlertDescription>
+          </Alert>
+        )}
       </div>
     </section>
   )
 }
 
-function ClientSatisfactionCard() {
+function ClientSatisfactionCard({ company }: { company: Company }) {
+  const companySurveys = getSurveysByCompanyId(company!.id)
+  const latestSurvey = companySurveys.find((s) => s.status === "Completed")
+  const responses = latestSurvey
+    ? getSurveyResponsesBySurveyId(latestSurvey.id)
+    : []
+  const avgRating =
+    responses.length > 0
+      ? responses.reduce((sum, r) => sum + r.rating, 0) / responses.length
+      : 0
+
   return (
     <section>
       <Card>
         <CardHeader>
           <CardTitle>Client Satisfaction</CardTitle>
           <CardDescription>
-            Last conducted survey: August 5, 2026
+            {latestSurvey
+              ? `Last conducted survey: ${latestSurvey.completedDate?.toLocaleDateString()}`
+              : "No surveys yet"}
           </CardDescription>
           <CardAction>
-            <Button variant="link">
-              <span>Go to Client Survey</span>
-              <MoveUpRight />
+            <Button variant="link" asChild>
+              <Link to="/admin/client-satisfactions">
+                <span>Go to Client Survey</span>
+                <MoveUpRight />
+              </Link>
             </Button>
           </CardAction>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">Latest Rating</p>
-          <h1 className="text-2xl font-semibold">4.5 / 5</h1>
+          <h1 className="text-2xl font-semibold">
+            {avgRating > 0 ? `${avgRating.toFixed(1)} / 5` : "N/A"}
+          </h1>
         </CardContent>
       </Card>
     </section>
