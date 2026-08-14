@@ -14,11 +14,11 @@ import { Link } from "@tanstack/react-router"
 import {
   Bell,
   ChartSpline,
-  Handshake,
+  ClipboardCheck,
   LayoutGrid,
   LogOut,
-  Mail,
-  Star,
+  MessageCircleMore,
+  Network,
   UserRound,
   UserRoundCog,
 } from "lucide-react"
@@ -58,17 +58,17 @@ const sidebarConfig = [
       {
         path: "/admin/lead-and-client",
         label: "Lead and Client Tracking",
-        icon: Handshake,
+        icon: Network,
       },
       {
         path: "/admin/communications",
         label: "Communications History",
-        icon: Mail,
+        icon: MessageCircleMore,
       },
       {
         path: "/admin/client-satisfactions",
         label: "Client Satisfaction and Surveys",
-        icon: Star,
+        icon: ClipboardCheck,
         tooltip: "Client Satisfaction and Surveys",
       },
       {
@@ -102,7 +102,7 @@ export function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center gap-4">
           <img
-            src="/crm-logo.png"
+            src="/pms-logo.png"
             alt="Logo"
             className="h-auto w-20 object-cover"
           />

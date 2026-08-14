@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as AdminDashboardIndexRouteImport } from './routes/admin/dashboard/index'
+import { Route as AdminLeadAndClientIndexRouteImport } from './routes/admin/lead-and-client/index'
+import { Route as AdminLeadAndClientCompanyIdIndexRouteImport } from './routes/admin/lead-and-client/$companyId/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +36,33 @@ const AdminDashboardIndexRoute = AdminDashboardIndexRouteImport.update({
   path: '/dashboard/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminLeadAndClientIndexRoute = AdminLeadAndClientIndexRouteImport.update({
+  id: '/lead-and-client/',
+  path: '/lead-and-client/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminLeadAndClientCompanyIdIndexRoute =
+  AdminLeadAndClientCompanyIdIndexRouteImport.update({
+    id: '/lead-and-client/$companyId/',
+    path: '/lead-and-client/$companyId/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login/': typeof LoginIndexRoute
   '/admin/dashboard/': typeof AdminDashboardIndexRoute
+  '/admin/lead-and-client/': typeof AdminLeadAndClientIndexRoute
+  '/admin/lead-and-client/$companyId/': typeof AdminLeadAndClientCompanyIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginIndexRoute
   '/admin/dashboard': typeof AdminDashboardIndexRoute
+  '/admin/lead-and-client': typeof AdminLeadAndClientIndexRoute
+  '/admin/lead-and-client/$companyId': typeof AdminLeadAndClientCompanyIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +70,34 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteRouteWithChildren
   '/login/': typeof LoginIndexRoute
   '/admin/dashboard/': typeof AdminDashboardIndexRoute
+  '/admin/lead-and-client/': typeof AdminLeadAndClientIndexRoute
+  '/admin/lead-and-client/$companyId/': typeof AdminLeadAndClientCompanyIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/login/' | '/admin/dashboard/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login/'
+    | '/admin/dashboard/'
+    | '/admin/lead-and-client/'
+    | '/admin/lead-and-client/$companyId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/login' | '/admin/dashboard'
-  id: '__root__' | '/' | '/admin' | '/login/' | '/admin/dashboard/'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/admin/dashboard'
+    | '/admin/lead-and-client'
+    | '/admin/lead-and-client/$companyId'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/login/'
+    | '/admin/dashboard/'
+    | '/admin/lead-and-client/'
+    | '/admin/lead-and-client/$companyId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,15 +136,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/lead-and-client/': {
+      id: '/admin/lead-and-client/'
+      path: '/lead-and-client'
+      fullPath: '/admin/lead-and-client/'
+      preLoaderRoute: typeof AdminLeadAndClientIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/lead-and-client/$companyId/': {
+      id: '/admin/lead-and-client/$companyId/'
+      path: '/lead-and-client/$companyId'
+      fullPath: '/admin/lead-and-client/$companyId/'
+      preLoaderRoute: typeof AdminLeadAndClientCompanyIdIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
 interface AdminRouteRouteChildren {
   AdminDashboardIndexRoute: typeof AdminDashboardIndexRoute
+  AdminLeadAndClientIndexRoute: typeof AdminLeadAndClientIndexRoute
+  AdminLeadAndClientCompanyIdIndexRoute: typeof AdminLeadAndClientCompanyIdIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDashboardIndexRoute: AdminDashboardIndexRoute,
+  AdminLeadAndClientIndexRoute: AdminLeadAndClientIndexRoute,
+  AdminLeadAndClientCompanyIdIndexRoute: AdminLeadAndClientCompanyIdIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
