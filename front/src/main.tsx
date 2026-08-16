@@ -25,7 +25,7 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <ThemeProvider>
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <RouterProvider router={router} />
         </TooltipProvider>
